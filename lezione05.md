@@ -108,3 +108,45 @@ Per quanto riguarda l'**esecuzione condizionale** abbiamo che gli IFs sono rappr
 Per i **loop** invece la notazione è $\star[n]$ dove _n_ potrebbe ad esempio essere la dimensione di un array. Nel nostro esempio potremmo piazzare diverse scommesse in base al contenuto di una lista, quindi si itera sulla lunghezza della lista e si chiama molteplici volte lo stimula "Place".
 
 La **ricorsione** è indicata con una freccia che parte da un Focus of control che torna a se stesso.
+
+## State Diagrams
+
+Servono a rappresentare il ciclo di vita di un entità, tipicamente una classe o un oggetto descrivendo:
+- Eventi e azioni
+- Stati - insieme di attributi di un entità che ha influenza sul comportamento. Abbiamo che lo stato iniziale è quello dopo la creazione o il boot e lo stato finale potrebbe non esistere per entità persistenti.
+- Transizioni
+- Guards
+
+La rappresentazione è di nuovo grafica, dove ad ogni stato è associata una tabella, come nell'immagine che segue:
+<img src="./imgs/statediagram.png" alt="Esempio state diagram">
+
+Gli archi sono le transizioni di stato:
+<img src="./imgs/arcsstatediagram.png" alt="Esempio di arco in state diagram">
+
+Un evento può avere parametri e guardie ```event[parameters][guard] / action```. Le guardie sono semplicemente dei condition block che vanno rispettati per far avvenire una transizione.
+Gli eventi triggerano le state transition e sono modellati come messaggi nei sequence diagrams, possono essere di due tipi principali:
+- **change event**, quando una condizione diventa true o false (es l'utente ha scommesso più di 100 euro)
+- **time event**, quando scade un timer o contatore (es sono passati 7 giorni dall'ultima scommessa dell'utente)
+
+
+All'interno degli stati possiamo trovare:
+- **Attività** - non atomiche e non alterano lo stato
+- **Azioni** - atomiche e alterano lo stato
+
+Per quanto riguarda le azioni abbiamo diversi trigger:
+- **Entry**, eseguita appena un oggetto entra in un certo stato
+- **Exit**, eseguita quando esce da uno stato
+- **Do**, eseguita quando l'oggetto si trova in un certo stato
+- **Include**, invoca una submachine (un altro state diagram)
+- **Event**, appena un evento accade
+
+Appena un evento triggera una transizione:
+1. le on-going activities sono interrotte
+2. viene runnata la Exit action
+3. Viene runnata la Event action
+4. Viene runnata la Entry action del nuovo stato
+5. Vengono runnate le Do actions del nuovo stato
+
+## Activity Diagrams
+
+Modellano il comportamento di ogni entità nel sistema per ogni stato.
