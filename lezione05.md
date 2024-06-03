@@ -75,3 +75,36 @@ Per quanto riguarda le relazioni abbiamo dei collegamenti tra gli attori e gli u
 - Nell'esempio potremmo come **generalizzazione** un player con free tier e un player con subscription, che viene dalla generalizzazione di player, ovvero ha gli stessi use-case ai quali si aggiunge _edit bet_ che gli permette di customizzare la bet classica che ha anche il free tier. Possono quindi avvenire tra **UC** o tra **Actors**
 - Le **estensioni** invece servono a definire le dipendenze, nel nostro caso un player prima fa la scommessa e solo dopo lancia i dadi, quindi **bet \<\<extends\>\> throw**.
 - Le **inclusioni** servono ad esprimere il riutilizzo dei gruppi, ad esempio possiamo giocare e scommettere anche con le carte e non solo con i dadi, quindi **bet \<\<includes\>\> throw, draw**
+
+Ci sono due modi _iterativi_ di lavorare:
+- **Actor-based** - per ogni attore si modella l'interazione
+- **Process-based** - per ogni interazione si identificano gli attori
+
+## Sequence Diagrams
+
+Si concentrano sugli attori e i dati che scambiano con il sistema, descrivendo l'interazione e il significato dei dati e dei messaggi, affiancando il tutto ad una timeline dello scenario
+
+<img src="./imgs/sequencediagram.png" alt="Sequence diagram per esempio di paolos casino">
+
+Gli oggetti sono i rettangoli sopra, possono essere:
+- Attori (player)
+- Moduli (bet, play, usr)
+- Classi (none here)
+- DBs (storage)
+
+Per ogni oggetto c'è una **lifeline** che rappresenta quando una entità esiste e su questa si possono piazzare dei rettangoli detti **Focus of control**, che descrivono le interazioni in modo sincrono.
+A collegare quest'ultimi abbiamo gli **Stimula**, ovvero frecce che rappresentano chiamate e invocazioni con una breve descrizione, le chiamate sono linee continue, le risposte sono a tratti. Non è necessario modellare i dati trasferiti. Ci sono frecce diverse per le chiamate asincrone. Gli **stimula** quindi astraggono i messaggi, che rapprsentano le azioni, come chiamate, return, send, create e destroy.
+Tra i tipi di messaggio abbiamo:
+- Per gli oggetti costruttori e distruttori
+- Read queries
+- Update
+- Trigger an action
+- Iterative (ad esempio se lavoriamo con liste etc)
+
+Ad esempio i verbi HTTP (CRUD).
+
+Per quanto riguarda l'**esecuzione condizionale** abbiamo che gli IFs sono rappresentati con $[cond]$ dove cond è la condizione, ad esempio $[Bet > 0]\longrightarrow \mathbf{Send}$ o $[Bet <= 0] \longrightarrow \mathbf{Log Error}$ 
+
+Per i **loop** invece la notazione è $\star[n]$ dove _n_ potrebbe ad esempio essere la dimensione di un array. Nel nostro esempio potremmo piazzare diverse scommesse in base al contenuto di una lista, quindi si itera sulla lunghezza della lista e si chiama molteplici volte lo stimula "Place".
+
+La **ricorsione** è indicata con una freccia che parte da un Focus of control che torna a se stesso.
