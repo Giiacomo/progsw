@@ -150,3 +150,14 @@ Appena un evento triggera una transizione:
 ## Activity Diagrams
 
 Modellano il comportamento di ogni entità nel sistema per ogni stato.
+Gli **action states** sono attività atomiche, che non possono essere divise o interrotte e avvengono in modo istantaneo. Ci sono due stati speciali, ovvero **start** ed **end**. Le transizioni avvengono quando l'azione finisce. 
+
+Per quanto riguarda il banching si usa il rombo che rapprsenta un if-else e per fare il merge dei branch si riusa il rombo. 
+
+Per avere azioni parallele si usa una riga nera spessa, che indica thread paralleli e si riusa la riga nera per il join.
+
+Si possono racchiudere dei gruppi di attività in macro funzionalità, ad esempio possiamo raggruppare un branch che può andare in spedizione 24h o spedizione standard in base all'utente dentro un macro gruppo chiamato consegna.
+
+<img src="./imgs/activitydiagram.PNG" alt="Esempio di diagramma di attività">
+
+Le **swimlanes** dividono il diagramma in **aree**, che possono modellare use-case, classi e componenti.
